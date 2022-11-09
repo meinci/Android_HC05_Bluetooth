@@ -61,22 +61,29 @@ public class MainActivity extends AppCompatActivity {
                 seekBarEff2.setProgress(0);
                 textViewseekBar3.setText("0");
                 seekBarEff3.setProgress(0);
-                try {
+                boolean connected = btSocket.isConnected();
+                if (connected == true) {
+                    System.out.println("CONNECTED!!!");
+                    try {
                     /*OutputStream outputStream = btSocket.getOutputStream();
                     String stringValue = Integer.toString(i+100);
                     String neuString1 = stringValue.concat("e1#");
                     System.out.println(neuString1);
                     outputStream.write(neuString1.getBytes());*/
+                        OutputStream outputStream = btSocket.getOutputStream();
+                        int Value = (i);
+                        outputStream.write(Value);
+                        outputStream.write(Value);
+                        System.out.println(i);
 
-                    OutputStream outputStream = btSocket.getOutputStream();
-                    int Value = (i);
-                    outputStream.write(Value);
-                    outputStream.write(Value);
-                    System.out.println(i);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+                else{
+                    BTconnect();
+                }
+
                 /*InputStream inputStream;
                 try {   //***Empfängt 1 Byte***
                     inputStream = btSocket.getInputStream();
@@ -206,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @SuppressLint("MissingPermission")
-    private void BTconnect() {
+    public void BTconnect() {
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         BluetoothDevice HC05A = btAdapter.getRemoteDevice("98:D3:32:70:E3:82");
         //BluetoothDevice HC05B = btAdapter.getRemoteDevice("98:D3:32:70:E0:FD");
@@ -216,13 +223,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (btSocket.isConnected()) {  //ausführlich (btSocket.isConnected()== true)
-            imageView_BT_connected.setVisibility(View.VISIBLE);
-            textView.setText("BT connected");
-        } else {
-            imageView_BT_connected.setVisibility(View.GONE);
-            textView.setText("BT disconnected");
-        }
+
         try {
             OutputStream outputStream = btSocket.getOutputStream();
             outputStream.write(200);
