@@ -48,10 +48,6 @@ public class MainActivity extends AppCompatActivity {
         textViewseekBar2 = findViewById(R.id.Id_textView_seekBar2);
         textViewseekBar3 = findViewById(R.id.Id_textView_seekBar3);
         BTconnect();
-//        String l_effekt1 = "eff1";
-
-
-
 
         seekBarEff1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -61,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 seekBarEff2.setProgress(0);
                 textViewseekBar3.setText("0");
                 seekBarEff3.setProgress(0);
-                boolean connected = btSocket.isConnected();
-                if (connected == true) {
-                    System.out.println("CONNECTED!!!");
                     try {
                     /*OutputStream outputStream = btSocket.getOutputStream();
                     String stringValue = Integer.toString(i+100);
@@ -72,18 +65,15 @@ public class MainActivity extends AppCompatActivity {
                     outputStream.write(neuString1.getBytes());*/
                         OutputStream outputStream = btSocket.getOutputStream();
                         int Value = (i);
+                        //outputStream.write(Value);
                         outputStream.write(Value);
-                        outputStream.write(Value);
-                        System.out.println(i);
-
+                        textView.setText("Connected");
                     } catch (IOException e) {
                         e.printStackTrace();
+                        System.out.println("***NOT CONNECTED***");
+                        textView.setText("Not connected");
+                        BTconnect();
                     }
-                }
-                else{
-                    BTconnect();
-                }
-
                 /*InputStream inputStream;
                 try {   //***Empfängt 1 Byte***
                     inputStream = btSocket.getInputStream();
@@ -100,14 +90,11 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }*/
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
@@ -129,9 +116,12 @@ public class MainActivity extends AppCompatActivity {
                     OutputStream outputStream = btSocket.getOutputStream();
                     int Value = (i+50);
                     outputStream.write(Value);
-
+                    textView.setText("Connected");
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println("***NOT CONNECTED***");
+                    textView.setText("Not connected");
+                    BTconnect();
                 }
                 /*InputStream inputStream;
                 try {   //***Empfängt 1 Byte***
@@ -150,16 +140,13 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }*/
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
 
         seekBarEff3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -179,8 +166,12 @@ public class MainActivity extends AppCompatActivity {
                     OutputStream outputStream = btSocket.getOutputStream();
                     int Value = (i+100);
                     outputStream.write(Value);
+                    textView.setText("Connected");
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println("***NOT CONNECTED***");
+                    textView.setText("Not Connected");
+                    BTconnect();
                 }
                /* InputStream inputStream;
                 try {   //***Empfängt 1 Byte***
@@ -199,18 +190,14 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }*/
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
     }
-
 
     @SuppressLint("MissingPermission")
     public void BTconnect() {
@@ -223,14 +210,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        try {
-            OutputStream outputStream = btSocket.getOutputStream();
-            outputStream.write(200);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         /*InputStream inputStream ;
         try {
             inputStream = btSocket.getInputStream();
